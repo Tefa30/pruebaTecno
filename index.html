@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TECNOGUIAS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color: black; color: white; font-family: 'Share Tech Mono', monospace; }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #000000;
+      padding: 15px 30px;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    header img {
+      height: 40px;
+    }
+
+    nav a {
+      margin-left: 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .background-section {
+  background-image: url('img/fondo1.jpg'); /* Cambia esto por tu imagen */
+  background-size: cover;
+  background-position: center;
+  padding: 100px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.content-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.small-image, .text-content {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease;
+}
+
+.small-image.show, .text-content.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.text-content {
+  color: white;
+  max-width: 700px;
+}
+.text-content p {
+  font-size: 1.6em;
+  line-height: 1.8;
+  margin-top: 20px;
+}
+.text-content h2 {
+  font-size: 6em;
+  margin-bottom: 10px;
+  font-family: 'Orbitron', sans-serif; /* fuente futurista sugerida */
+}
+
+
+    .content {
+      padding: 100px 20px 50px;
+      text-align: center;
+    }
+
+    .content h1 {
+      font-size: 48px;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    .content p {
+      font-size: 18px;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .feature {
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .feature img {
+      height: 40px;
+      margin-bottom: 10px;
+    }
+
+    .feature p {
+      margin-bottom: 10px;
+    }
+
+    .logo-center {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 60px;
+    }
+
+    .logo-center img {
+      width: 190px;
+    }
+
+    .cards-section {
+  background-color: #000000;
+  padding: 80px 20px 40px;
+  text-align: center;
+}
+/*primeras targetas*/
+.feature-cards {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 80px 20px;
+  background: radial-gradient(circle at center, #0a0a0a 60%, #000 100%);
+}
+
+.feature-cards .card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+  padding: 30px;
+  text-align: center;
+  width: 260px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-cards .card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+}
+
+.feature-cards img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #00ffff;
+  margin-bottom: 20px;
+}
+
+.feature-cards h3 {
+  color: #00ffff;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 10px;
+}
+
+.feature-cards p {
+  color: #ccc;
+  font-size: 0.95em;
+}
+
+.cards-section {
+  padding: 40px;
+}
+
+.cards-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 0; /* sin separación entre imagen y tarjetas */
+}
+
+/* Imagen ocupa el 50% de la sección */
+.image-container {
+  width: 50%;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Tarjetas también ocupan el 50% */
+.cards-container {
+  width: 50%;
+  padding-left: 30px;
+  box-sizing: border-box;
+}
+
+/* Título */
+.cards-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.cards-title h1 {
+  font-size: 3em;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 3px;
+  color: white;
+}
+
+/* Grid 2x2 con menos separación */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
+
+/* Estilo de tarjeta */
+.card {
+  background-color: #2a74ff;
+  border-radius: 20px;
+  padding: 20px 15px;
+  width: 180px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+.card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #ffffff;
+}
+
+.card p {
+  color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1em;
+}
+
+
+
+    
+.section-video {
+  background-image: url('img/fondo3.png'); 
+  background-size: cover;
+  background-position: center;
+  padding: 80px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.section-video h2 {
+  font-size: 60px;
+  margin-bottom: 40px;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  color: #00ffff;
+}
+
+.video-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+#videoFrame {
+  width: 100%;
+  height: 400px;
+  border: none;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+#videoFrame.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.video-content .text {
+  color: #ccc;
+  font-size: 1em;
+  line-height: 1.6;
+  font-family: 'Orbitron', sans-serif;
+  text-align: justify;
+}
+
+.download-guide {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.download-guide h3 {
+  color: #00ffff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.3em;
+  margin-bottom: 10px;
+}
+
+.pdf-button {
+  width: 60px;
+  transition: transform 0.3s ease;
+}
+
+.pdf-button:hover {
+  transform: scale(1.1);
+}
+
+
+    @media(min-width: 768px) {
+      .video-content {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .video-content iframe {
+        width: 500px;
+        height: 300px;
+      }
+
+      .video-content .text {
+        max-width: 500px;
+        font-size: 18px;
+      }
+      iframe {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+iframe.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Menú -->
+  <header>
+    <img src="img/logo2.png" alt="Logo">
+    <nav>
+      <a href="#">Inicio</a>
+      <a href="#">Servicios</a>
+      <a href="#">Contacto</a>
+    </nav>
+  </header>
+
+  <!-- Imagen fondo + imagen pequeña -->
+ <section class="background-section">
+  <div class="content-wrapper">
+    <img src="img/logo1.png" alt="Imagen animada" class="small-image" id="smallImg">
+    <div class="text-content" id="textContent">
+      <h2>TECNOGUIAS</h2>
+      <p>Aquí encontrarás guías prácticas sobre la instalación y configuración de Linux, automatización con Bash, uso de Docker y Kubernetes, todo documentado con videos, capturas y explicaciones claras</p>
+        
+    </div>
+  </div>
+</section>
+
+
+  <!-- Contenido principal -->
+  <section class="content">
+    <h1>¿QUE ES TECNOGUIAS?</h1>
+    <p>Tecnoguias es una plataforma educativa enfocada en la tecnología. La página presenta actividades relacionadas con la instalación y configuración de distribuciones Linux, scripts en Bash, uso de Docker y Kubernetes, y el desarrollo de sitios web para presentar entregables. Incluye instrucciones, recursos y criterios de evaluación, con énfasis en fortalecer habilidades en entornos Linux, contenedores y orquestación para aplicaciones reale</p>
+    <h2>Objetivo General:</h2>
+    <p>Facilitar el aprendizaje práctico y autodidacta en Linux, automatización con Bash, y el manejo de Docker y Kubernetes mediante recursos visuales y explicativos claros.</p>
+    <h2>Objetivos Específicos:</h2>
+    <ul>
+      <li>Guiar a los usuarios en la instalación y configuración de diferentes distribuciones de Linux con instrucciones detalladas.</li>
+      <li>Enseñar técnicas de automatización y scripting con Bash a través de tutoriales paso a paso</li>
+      <li>Mostrar cómo utilizar Docker para crear, gestionar y desplegar contenedores de forma sencilla.</li>
+      <li>Explicar la gestión y orquestación de aplicaciones con Kubernetes de forma comprensible y práctica.</li>
+      <li>Complementar todo el contenido con videos, capturas y explicaciones claras que faciliten el entendimiento y la práctica</li>
+      <p>   </p>
+    <div class="features">
+      <div class="feature">
+        <img src="img/docker.png" alt="Docker">
+        <p>DOCKER</p>
+       
+      </div>
+      <div class="feature">
+        <img src="img/oracleVirtual.png" alt="CPU">
+        <p>ORACLEVIRTUAL</p>
+        
+      </div>
+      <div class="feature">
+        <img src="img/centox.jpg" alt="GPU">
+        <p>CENT0X</p>
+        
+      </div>
+      <div class="feature">
+        <img src="img/Kubernetes-Logo.jpg" alt="GPU">
+        <p>KUBERNETES</p>
+        
+      </div>
+    </div>
+
+    <div class="logo-center">
+  <a href="https://nortedelcauca.univalle.edu.co/">
+    <img src="img/logo-univalle.png" alt="Logo central">
+  </a>
+</div>
+
+  <!-- Sección targetas mensa -->
+
+<section class="feature-cards">
+  <div class="card">
+    <img src="img/jheiner.jpg" alt="Icono 1">
+    <h3>Virtual Box y maquinas Virtuales</h3>
+    <p>Descubre el potencial de las máquinas virtuales con un programa que las simula. Te ayudaré a instalar y configurar dos tipos, descargar aplicaciones importantes y más. ¡Anímate y explora el mundo de las máquinas virtuales sin preocupaciones!</p>
+  </div>
+  <div class="card">
+    <img src="img/sebastian.jpg" alt="Icono 2">
+    <h3>Activación de Kubernetes y Pruebas en Docker Desktop</h3>
+    <p>Aprenderás a activar Kubernetes en Docker Desktop, configurar un pod para acceder al contenedor y realizar comandos de prueba para verificar que todo funcione correctamente.</p>
+  </div>
+  <div class="card">
+    <img src="img/santiago.jpg" alt="Icono 3">
+    <h3>CONOCE DOCKER</h3>
+    <p>Verás el poder de los contenedores con Docker. Te ayudaré a instalar Docker Desktop, crear un Dockerfile con Alpine Linux, construir tu imagen y subirla a Docker Hub. ¡Anímate a explorar el mundo de Docker sin complicaciones</p>
+  </div>
+</section>
+
+
+
+
+  <!-- Sección con fondo, título, video y texto -->
+  <section class="section-video">
+  <h2>INSTALAR CENT0X</h2>
+  <div class="video-content">
+    <iframe id="videoFrame" src="https://www.youtube.com/embed/mLw031kpyKQ?si=PQh5C7qSMe6eEDBR" title="Demo video" frameborder="0" allowfullscreen></iframe>
+
+    <div class="text">
+      <p>
+        Se explica cómo instalar CentOx, configurando la máquina virtual, asignando memoria y disco, y conectando a internet. Se crean usuarios y se instalan programas esenciales como sudo, make, rsync y git. También se mencionan editores de código como nano, finalizando con la invitación a seguir aprendiendo sobre scripts.
+      </p>
+
+      <div class="download-guide">
+        <h3>Descarga guía</h3>
+        <a href="ruta-del-archivo.pdf" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="Botón PDF" class="pdf-button">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <h2 style="margin-top: 4%;">PROCESO DEBIAN</h2>
+  <div class="video-content">
+        <iframe id="videoFrame2"  src="https://www.youtube.com/embed/1uGMC6PETGQ?si=xUX-SWwF6YMi68U_" title="Demo video" frameborder="0" allowfullscreen></iframe>
+
+    <div class="text">
+      <p>
+        Se explica el manejo de máquinas virtuales en Debian 12 usando Virtual Box. Se abordan la instalación, configuración de red, y la creación de máquinas virtuales. También se detallan la instalación de navegadores y editores de código, así como la creación de scripts para automatizar tareas. Se concluye con la instalación de Visual Studio Code y Pchart..
+      </p>
+
+      <div class="download-guide">
+        <h3>Descarga guía</h3>
+        <a href="ruta-del-archivo.pdf" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="Botón PDF" class="pdf-button">
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <h2 style="margin-top: 4%;">KUBERNETES</h2>
+  <div class="video-content">
+        <iframe id="videoFrame2"  src="https://www.youtube.com/embed/BlvML7hmihs?si=4K5q0bWcgLaHduro" title="Demo video" frameborder="0" allowfullscreen></iframe>
+
+    <div class="text">
+      <p>
+        Explica cómo activar Kubernetes en Docker Desktop, una plataforma de orquestación de contenedores. Se detalla la instalación y configuración inicial, así como la verificación del funcionamiento de Kubernetes mediante comandos en la terminal. El video concluye con la promesa de crear y ejecutar un pod en el siguiente tutorial.
+      </p>
+
+      <div class="download-guide">
+        <h3>Descarga guía</h3>
+        <a href="ruta-del-archivo.pdf" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="Botón PDF" class="pdf-button">
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <h2 style="margin-top: 4%;">INSTALACION Y CONFIGURACION DE DOCKER</h2>
+  <div class="video-content">
+        <iframe id="videoFrame2"  src="https://www.youtube.com/embed/bI-5oJiP8Eg?si=NJ2-Tj6qkgUR2tCz"  title="Demo video" frameborder="0" allowfullscreen></iframe>
+
+    <div class="text">
+      <p>
+        Se explican los pasos para instalar y configurar Docker Desktop, crear un Dockerfile para Alpine Linux, construir una imagen y subirla a un repositorio en GitHub. Se detallan comandos esenciales y se muestra cómo resolver errores comunes durante el proceso de creación y carga de imágenes.
+      </p>
+
+      <div class="download-guide">
+        <h3>Descarga guía</h3>
+        <a href="ruta-del-archivo.pdf" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="Botón PDF" class="pdf-button">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <section class="cards-section">
+  <div class="cards-wrapper">
+
+    <!-- Imagen lateral izquierda (50% del ancho) -->
+    <div class="image-container">
+      <img src="img/todos.jpg" alt="Imagen lateral">
+    </div>
+
+    <!-- Tarjetas a la derecha (también 50% del ancho) -->
+    <div class="cards-container">
+      <div class="cards-title">
+        <h1>CREADORES</h1>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <img src="img/esthefany.jpg" alt="Icono 1">
+          <p>esthefany zapata</p>
+        </div>
+        <div class="card">
+          <img src="img/jheiner.jpg" alt="Icono 2">
+          <p>jheiner larrahondo</p>
+        </div>
+        <div class="card">
+          <img src="img/sebastian.jpg" alt="Icono 3">
+          <p>sebastian reyes</p>
+        </div>
+        <div class="card">
+          <img src="img/santiago.jpg" alt="Icono 4">
+          <p>santiago gualguan</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+  <script>
+    window.addEventListener('scroll', () => {
+  const img = document.getElementById('smallImg');
+  const text = document.getElementById('textContent');
+  const trigger = window.innerHeight / 1.2;
+
+  if (img.getBoundingClientRect().top < trigger) {
+    img.classList.add('show');
+  }
+  if (text.getBoundingClientRect().top < trigger) {
+    text.classList.add('show');
+  }
+});
+
+
+window.addEventListener('scroll', () => {
+  const elements = [document.getElementById('smallImg'), document.getElementById('textContent'), ...document.querySelectorAll('iframe')];
+  const trigger = window.innerHeight / 1.2;
+
+  elements.forEach(el => {
+    if (el.getBoundingClientRect().top < trigger) {
+      el.classList.add('show');
+    }
+  });
+});
+
+
+
+  </script>
+
+</body>
+</html>
